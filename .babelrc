@@ -3,7 +3,7 @@
     [
       "env",
       {
-        "modules": false,
+        "modules": "commonjs",
         "targets": {
           "browsers": "> 1%",
           "uglify": true
@@ -11,7 +11,8 @@
         "useBuiltIns": true
       }
     ],
-    "react"
+    "react",
+    "es2017"
   ],
   "plugins": [
     "syntax-dynamic-import",

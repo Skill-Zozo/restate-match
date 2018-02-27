@@ -1,15 +1,33 @@
-// import Slider, { Range } from 'rc-slider';
-// import 'rc-slider/assets/index.css';
+import Slider from 'rc-slider';
+import Tooltip from 'rc-tooltip';
+import 'rc-slider/assets/index.css';
+import 'rc-tooltip/assets/bootstrap.css';
 
 var React = require('react');
 var PropTypes = require('prop-types');
+const Handle = Slider.Handle;
+
+const handle = (props) => {
+  const { value, dragging, index, ...restProps } = props;
+  return (
+    <Tooltip
+      prefixCls="rc-slider-tooltip"
+      overlay={value}
+      visible={dragging}
+      placement="top"
+      key={index}
+    >
+      <Handle value={value} {...restProps} />
+    </Tooltip>
+  );
+};
 
 class SearchApp extends React.Component {
   render () {
     return  (
       <div className="ui grid">
         <div className="centered twelve wide column">
-          <div className='card'>
+          <div className='card' style={{'text-align':'left'}}>
             <div className='row'>
               <div className='ui transparent icon input'>
                 <div className='column'><i className='marker icon'></i></div>
@@ -19,41 +37,41 @@ class SearchApp extends React.Component {
             </div>
 
             <div className='row'>
-              <div className='five wide column'>
-                <a className="item left-borded-label">
-                  <div className="ui horizontal label">Price</div>
-                  <Slider
-                    min=0
-                    max=1000
-                  />
-                </a>
-                <a className="item left-borded-label">
-                  <div className="ui horizontal label">Bedrooms</div>
-                  <Slider
-                    min=0
-                    max=3
-                  />
-                </a>
-
-                <div className='ui divided list'>
+              <div className='ui four wide column unstackable items'>
+                <div className='item'>
+                  <div className="ui horizontal left-borded-label">Price</div>
+                  <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
+                    <Slider className='column' min={0} max={20} defaultValue={3} handle={handle} />
+                  </div>
+                </div>
+                <div className='item'>
+                  <div className="ui horizontal left-borded-label"> Bedrooms</div>
+                  <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
+                    <Slider className='column' min={0} max={20} defaultValue={3} handle={handle} />
+                  </div>
+                </div>
+                <div className='ui divided list items'>
                   <div className='item'>
-                    <i className='TV icon'></i>
-                    <input type='checkbox' name='furnished'/> <label>Furnished</label>
+                    <i className='tv icon'></i>
+                    <input className='leftpad' type='checkbox' name='furnished'/>
+                    <label className='leftpad'>Furnished</label>
                   </div>
 
                   <div className='item'>
                     <i className='world icon'></i>
-                    <input type='checkbox' name='internet'/> <label>Internet Access</label>
+                    <input className='leftpad' type='checkbox' name='internet'/>
+                    <label className='leftpad'>Internet Access</label>
                   </div>
 
                   <div className='item'>
                     <i className='car icon'></i>
-                    <input type='checkbox' name='parking'/><label>Parking</label>
+                    <input className='leftpad' type='checkbox' name='parking'/>
+                    <label className='leftpad'>Parking</label>
                   </div>
                 </div>
               </div>
 
-              <div className='five wide column'>
+              <div className='four wide column'>
                 Close to (within a 5km radius of)
                 <div className='ui divided list'>
                   <div className='item'>
