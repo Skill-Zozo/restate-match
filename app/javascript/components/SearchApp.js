@@ -5,9 +5,11 @@ import 'rc-tooltip/assets/bootstrap.css';
 
 var React = require('react');
 var PropTypes = require('prop-types');
+const createSliderWithTooltip = Slider.createSliderWithTooltip;
+const Range = createSliderWithTooltip(Slider.Range);
 const Handle = Slider.Handle;
 
-const handle = (props) => {
+const handles = (props) => {
   const { value, dragging, index, ...restProps } = props;
   return (
     <Tooltip
@@ -23,6 +25,45 @@ const handle = (props) => {
 };
 
 class SearchApp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      furniture: false,
+      price: {
+        min: 0,
+        max: 0
+      },
+      bedrooms: {
+        min: 0,
+        max: 0
+      },
+      internet: false,
+      parking: false,
+      hospital: false,
+      train: false,
+      taxi: false,
+      beach: false
+    }
+  }
+
+  setPrice = (values) => {
+    this.setState({
+      price: {
+        min: values[0],
+        max: values[1]
+      }
+    })
+  }
+
+  setBedrooms = (values) => {
+    this.setState({
+      bedrooms: {
+        min: values[0],
+        max: values[1]
+      }
+    })
+  }
+
   render () {
     return  (
       <div className="ui grid">
@@ -42,31 +83,31 @@ class SearchApp extends React.Component {
                 <div className='item'>
                   <div className="ui horizontal left-borded-label">Price</div>
                   <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
-                    <Slider className='column' min={0} max={20} defaultValue={3} handle={handle} />
+                    <Range className='column' min={0} max={20} handle={handles} defaultValue={[1, 9]} onChange={this.setPrice}/>
                   </div>
                 </div>
                 <div className='item'>
                   <div className="ui horizontal left-borded-label"> Bedrooms</div>
                   <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
-                    <Slider className='column' min={0} max={20} defaultValue={3} handle={handle} />
+                    <Range className='column' min={0} max={20} handle={handles} defaultValue={[1, 9]} onChange={this.setBedrooms}/>
                   </div>
                 </div>
                 <div className='ui divided list items'>
                   <div className='item'>
                     <i className='tv icon'></i>
-                    <input className='leftpad' type='checkbox' name='furnished'/>
+                    <input className='leftpad' type='checkbox' name='furnished' onChange={(e) => {this.setState({furniture: e.target.checked})}}/>
                     <label className='leftpad'>Furnished</label>
                   </div>
 
                   <div className='item'>
                     <i className='world icon'></i>
-                    <input className='leftpad' type='checkbox' name='internet'/>
+                    <input className='leftpad' type='checkbox' name='internet' onChange={(e) => {this.setState({internet: e.target.checked})}}/>
                     <label className='leftpad'>Internet Access</label>
                   </div>
 
                   <div className='item'>
                     <i className='car icon'></i>
-                    <input className='leftpad' type='checkbox' name='parking'/>
+                    <input className='leftpad' type='checkbox' name='parking' onChange={(e) => {this.setState({parking: e.target.checked})}}/>
                     <label className='leftpad'>Parking</label>
                   </div>
                 </div>
@@ -76,19 +117,19 @@ class SearchApp extends React.Component {
                 Close to (within a 5km radius of)
                 <div className='ui divided list'>
                   <div className='item'>
-                    <input type='checkbox' name='hospital'/> <label>Hospital</label>
+                    <input type='checkbox' name='hospital' onChange={(e) => {this.setState({hospital: e.target.checked})}}/> <label>Hospital</label>
                   </div>
 
                   <div className='item'>
-                    <input type='checkbox' name='taxi'/> <label>Taxi Stop</label>
+                    <input type='checkbox' name='taxi' onChange={(e) => {this.setState({taxi: e.target.checked})}}/> <label>Taxi Stop</label>
                   </div>
 
                   <div className='item'>
-                    <input type='checkbox' name='train'/> <label>Train Station</label>
+                    <input type='checkbox' name='train' onChange={(e) => {this.setState({train: e.target.checked})}}/> <label>Train Station</label>
                   </div>
 
                   <div className='item'>
-                    <input type='checkbox' name='beach'/> <label>Beach</label>
+                    <input type='checkbox' name='beach' onChange={(e) => {this.setState({beach: e.target.checked})}}/> <label>Beach</label>
                   </div>
                 </div>
               </div>
