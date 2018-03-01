@@ -29,15 +29,16 @@ class SearchApp extends React.Component {
         <div className="centered twelve wide column">
           <div className='card' style={{'text-align':'left'}}>
             <div className='row'>
-              <div className='ui transparent icon input'>
+              <div className='ui centered grid transparent icon input'>
                 <div className='column'><i className='marker icon'></i></div>
-                <div className='column'><input type='text' placeholder='search for accomodation...'/></div>
+                <div className='twelve wide column bordered-bottom'><input type='text' placeholder='search for accomodation...' style={{width: '100%'}}/></div>
                 <div className='column'><i className='search icon'></i></div>
               </div>
             </div>
-
-            <div className='row'>
-              <div className='ui four wide column unstackable items'>
+            <br />
+            <br />
+            <div className='ui grid row'>
+              <div className='ui eight wide column unstackable items'>
                 <div className='item'>
                   <div className="ui horizontal left-borded-label">Price</div>
                   <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
@@ -71,7 +72,7 @@ class SearchApp extends React.Component {
                 </div>
               </div>
 
-              <div className='four wide column'>
+              <div className='eight wide column'>
                 Close to (within a 5km radius of)
                 <div className='ui divided list'>
                   <div className='item'>
