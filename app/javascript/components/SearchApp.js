@@ -64,6 +64,18 @@ class SearchApp extends React.Component {
     })
   }
 
+  submitForm() {
+    let state = this.state;
+    $.ajax({
+      url: '/accomodation/request',
+      type: 'PUT',
+      data: state,
+      success: function(result) {
+        console.log("Request for house entered")
+      }
+    })
+  }
+
   render () {
     return  (
       <div className="ui grid">
@@ -131,6 +143,10 @@ class SearchApp extends React.Component {
                   <div className='item'>
                     <input type='checkbox' name='beach' onChange={(e) => {this.setState({beach: e.target.checked})}}/> <label>Beach</label>
                   </div>
+                </div>
+
+                <div style={{position: 'absolute', bottom:'10%', right:'10%'}}>
+                  <button className="ui primary basic button" onClick={this.submitForm.bind(this)}>Submit Request</button>
                 </div>
               </div>
             </div>
