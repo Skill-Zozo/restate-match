@@ -58,4 +58,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Integrating React
 gem 'webpacker'
 gem 'react-rails'
-gem 'browserify-rails'
+
+# users
+gem 'devise'

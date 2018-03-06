@@ -28,7 +28,7 @@ class SearchApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      furniture: false,
+      furnished: false,
       price: {
         min: 0,
         max: 0
@@ -65,7 +65,7 @@ class SearchApp extends React.Component {
   }
 
   submitForm() {
-    let state = this.state;
+    let state = this.state
     $.ajax({
       url: '/accomodation/request',
       type: 'PUT',
@@ -95,13 +95,13 @@ class SearchApp extends React.Component {
                 <div className='item'>
                   <div className="ui horizontal left-borded-label">Price</div>
                   <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
-                    <Range className='column' min={0} max={20} handle={handles} defaultValue={[1, 9]} onChange={this.setPrice}/>
+                    <Range className='column' min={0} max={20} handle={handles} marks={0: '0', 5: '5', 10:'10', 15:'15', 20:'20'} defaultValue={[1, 9]} onChange={this.setPrice}/>
                   </div>
                 </div>
                 <div className='item'>
                   <div className="ui horizontal left-borded-label"> Bedrooms</div>
                   <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
-                    <Range className='column' min={0} max={20} handle={handles} defaultValue={[1, 9]} onChange={this.setBedrooms}/>
+                    <Range className='column' min={0} max={20} handle={handles} marks={0: '0', 5: '5', 10:'10', 15:'15', 20:'20'} defaultValue={[1, 9]} onChange={this.setBedrooms}/>
                   </div>
                 </div>
                 <div className='ui divided list items'>
