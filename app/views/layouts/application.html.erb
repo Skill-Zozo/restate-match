@@ -10,6 +10,7 @@
 </head>
 
   <body>
-    <%= yield %>
+    <%= render("layouts/menu_bar")%>
+    <%= current_page?(login_path) ? render("layouts/devise_layout") : yield %>
   </body>
 </html>

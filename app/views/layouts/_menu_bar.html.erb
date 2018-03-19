@@ -1,0 +1,26 @@
+<div class="ui grid menu">
+  <%= image_tag 'batman.png', {class: 'ui image margintop item',  height: '50', width: '100'} %>
+  <div class="ten wide column">
+    <div class="item">
+      <div class="ui icon input" ><input type="text" placeholder="search..."><i class="search link icon"></i></div>
+    </div>
+  </div>
+  <div class="three wide column">
+    <% if current_user %>
+      <% if current_user.type == "tenant" %>
+        <a class="item" href="/offers"> <font color="#1E9EC9">Offers </font></a>
+      <% elsif current_user.type == "owner" %>
+        <a class="item" href="/requests"> <font color="#1E9EC9">Requests</font> </a>
+      <% end %>
+      <div class="item">
+        <i class="icon user colored"></i>
+        <label> <font color="#1E9EC9"><%= current_user.email %> </font></label>
+      </div>
+    <% else %>
+      <div class="item">
+        <i class="icon user"></i>
+        <label> Login </label>
+      </div>
+    <% end %>
+  </div>
+</div>

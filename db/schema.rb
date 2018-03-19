@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180306112509) do
+ActiveRecord::Schema.define(version: 20180316183724) do
+
+  create_table "accomodation_requests", force: :cascade do |t|
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "user_id"
+    t.boolean  "furnished"
+    t.string   "near"
+    t.integer  "max_price"
+    t.integer  "min_price"
+    t.integer  "min_bedroom"
+    t.integer  "max_bedroom"
+    t.boolean  "internet_access"
+    t.index ["user_id"], name: "index_accomodation_requests_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                          null: false
@@ -25,6 +39,7 @@ ActiveRecord::Schema.define(version: 20180306112509) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "type"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
