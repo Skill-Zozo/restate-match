@@ -28,6 +28,9 @@ class SearchApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      modalMessage: "",
+      requestSuccessful: false,
+      location: "",
       furnished: false,
       price: {
         min: 0,
@@ -65,27 +68,71 @@ class SearchApp extends React.Component {
   }
 
   submitForm = () => {
+    let app = this
     let state = this.state
+    app.showLoadingModal()
     $.ajax({
       url: '/accomodation/request',
       type: 'PUT',
       data: state,
+      datatype: "json",
       success: function(result) {
         console.log("Request for house entered")
+        app.setState({
+          modalMessage: "Your request has been successfully submitted",
+          requestSuccessful: true
+        })
+        app.cancelLoadingModal()
+        app.showRequestSuccessModal()
+      }, error: function(err) {
+        console.log(err)
+        app.setState({
+          modalMessage: `Request for accomodation failed\nError code: ${err.status}\nResponse from server: ${err.responseText.substring(0,256)}...`,
+          requestSuccessful: false
+       })
+        app.cancelLoadingModal()
+        app.showRequestSuccessModal()
       }
     })
+  }
+
+  showLoadingModal = () => {
+    $("#loading").addClass("active")
+  }
+
+  cancelLoadingModal = () => {
+    $("#loading").removeClass("active")
+  }
+
+  showRequestSuccessModal = () => {
+    $('#modal').modal('show')
   }
 
   render () {
     return  (
       <div className="ui grid">
         <div className="centered twelve wide column">
+
+          <div className="ui dimmer" id="loading">
+            <div className="ui massive indeterminate text loader">Submitting request for accomodation</div>
+          </div>
+
+          <div className="ui modal" id="modal">
+            <i className="close icon"></i>
+            <div className="header"> Request for Accomodation</div>
+            <div className="content"> {this.state.modalMessage}</div>
+            <div className="actions">
+              <div className="ui black deny button"> Close </div>
+              {this.state.requestSuccessful && <div className="ui positive right button">View Matches</div>}
+            </div>
+          </div>
+
+
           <div className='card' style={{'text-align':'left'}}>
             <div className='row'>
               <div className='ui centered grid transparent icon input'>
-                <div className='column'><i className='marker icon'></i></div>
-                <div className='twelve wide column bordered-bottom'><input type='text' placeholder='search for accomodation...' style={{width: '100%'}}/></div>
-                <div className='column'><i className='search icon'></i></div>
+                <div className='column'><i className='marker larger icon'></i></div>
+                <div className='twelve wide column bordered-bottom'><input type='text' placeholder='location for accomodation...' style={{width: '100%'}}/></div>
               </div>
             </div>
             <br />
