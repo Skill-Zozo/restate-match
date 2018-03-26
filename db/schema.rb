@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180316183724) do
+ActiveRecord::Schema.define(version: 20180326134016) do
 
   create_table "accomodation_requests", force: :cascade do |t|
     t.datetime "created_at",      null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20180316183724) do
     t.integer  "min_bedroom"
     t.integer  "max_bedroom"
     t.boolean  "internet_access"
+    t.string   "location"
     t.index ["user_id"], name: "index_accomodation_requests_on_user_id"
   end
 

@@ -40,7 +40,7 @@ class SearchApp extends React.Component {
         min: 0,
         max: 0
       },
-      internet: false,
+      internet_access: false,
       parking: false,
       hospital: false,
       train: false,
@@ -160,7 +160,7 @@ class SearchApp extends React.Component {
 
                   <div className='item'>
                     <i className='world icon'></i>
-                    <input className='leftpad' type='checkbox' name='internet' onChange={(e) => {this.setState({internet: e.target.checked})}}/>
+                    <input className='leftpad' type='checkbox' name='internet' onChange={(e) => {this.setState({internet_access: e.target.checked})}}/>
                     <label className='leftpad'>Internet Access</label>
                   </div>
 
