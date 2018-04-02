@@ -12,15 +12,49 @@
       <% elsif current_user.type == "owner" %>
         <a class="item" href="/requests"> <font color="#1E9EC9">Requests</font> </a>
       <% end %>
-      <div class="item">
-        <i class="icon user colored"></i>
-        <label> <font color="#1E9EC9"><%= current_user.email %> </font></label>
+      <div class="ui fluid dropdown margintop">
+        <div class="text">
+          <%= image_tag "nan.jpg", {class: "ui avatar image"} %>
+          <label> <font color="#1E9EC9"><%= current_user.email %> </font></label>
+        </div>
+        <div class="menu">
+          <div class="item" onclick="logout()">
+            Logout
+          </div>
+        </div>
+
       </div>
     <% else %>
       <div class="item">
         <i class="icon user"></i>
-        <label> Login </label>
+        <a href="/sign-in"><label> Login </label></a>
       </div>
     <% end %>
   </div>
 </div>
+
+<div class="ui modal" name="logout">
+  <div class="header">Logging Out</div>
+  <div class="content" name="logoutMessage"></div>
+  <div class="actions">
+    <div class="ui black deny button"> Close </div>
+  </div>
+</div>
+
+<script>
+  function logout() {
+    $.ajax({
+      url: 'users/sign_out',
+      type: "DELETE",
+      success: function(res) {
+        $("#logoutMessage").append("Successfully logged out")
+        $('#modal').modal('show')
+      }, error: function(err) {
+        $("logoutMessage").append("Some bullshit happened homes")
+        $('#modal').modal('show')
+      }
+    })
+  };
+
+  $('.ui.dropdown').dropdown();
+</script>
