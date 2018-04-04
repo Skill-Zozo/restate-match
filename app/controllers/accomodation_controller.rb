@@ -3,6 +3,10 @@ class AccomodationController < ApplicationController
   before_action :authenticate_user!, only: :new_request
 
   def index
+    @min_price = Accomodation.minimum("price")
+    @max_price = Accomodation.maximum("price")
+    @min_bedroom = Accomodation.minimum("bedroom_count")
+    @max_bedroom = Accomodation.maximum("bedroom_count")
   end
 
   def new_request

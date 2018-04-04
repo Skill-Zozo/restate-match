@@ -6,4 +6,6 @@ class Accomodation < ApplicationRecord
   validates :bedroom_count, presence: true
   validates :bathroom_count, presence: true
   validates :furnished, presence: true
+
+
 end

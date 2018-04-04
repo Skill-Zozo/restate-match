@@ -1,5 +1,14 @@
 <%= javascript_pack_tag 'application' %>
 <%= stylesheet_pack_tag 'application' %>
 <div style="margin-top: 20px">
-  <%= react_component 'SearchApp', {}, prerender: true %>
+  <%= react_component 'SearchApp', {
+      price: {
+        max: @max_price,
+        min: @min_price
+      },
+      bedroom: {
+        min: @min_bedroom,
+        max: @max_bedroom
+      }
+    }, prerender: true %>
 </div>

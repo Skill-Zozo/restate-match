@@ -33,12 +33,12 @@ class SearchApp extends React.Component {
       location: "",
       furnished: false,
       price: {
-        min: 0,
-        max: 0
+        min: this.props.price.min,
+        max: this.props.price.max
       },
       bedrooms: {
-        min: 0,
-        max: 0
+        min: this.props.bedroom.min,
+        max: this.props.bedroom.max
       },
       internet_access: false,
       parking: false,
@@ -65,6 +65,18 @@ class SearchApp extends React.Component {
         max: values[1]
       }
     })
+  }
+
+  marks(room) {
+    let finalMarks = {}
+    let max = this.props[room]["max"]
+    let min = this.props[room]["min"]
+    let mid = min + (max - min)/2
+    finalMarks[max] = `${max}`
+    finalMarks[min] = `${min}`
+    finalMarks[mid] = `${mid}`
+
+    return finalMarks;
   }
 
   submitForm = () => {
@@ -142,13 +154,13 @@ class SearchApp extends React.Component {
                 <div className='item'>
                   <div className="ui horizontal left-borded-label">Price</div>
                   <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
-                    <Range className='column' min={0} max={20} handle={handles} marks={{0: '0', 5: '5', 10:'10', 15:'15', 20:'20'}} defaultValue={[1, 9]} onChange={this.setPrice}/>
+                    <Range className='column' min={this.props.price.min} max={this.props.price.max} handle={handles} marks={this.marks("price")} defaultValue={[this.props.price.min, this.props.price.max]} onChange={this.setPrice}/>
                   </div>
                 </div>
                 <div className='item'>
                   <div className="ui horizontal left-borded-label"> Bedrooms</div>
                   <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
-                    <Range className='column' min={0} max={20} handle={handles} marks={{0: '0', 5: '5', 10:'10', 15:'15', 20:'20'}} defaultValue={[1, 9]} onChange={this.setBedrooms}/>
+                    <Range className='column' min={this.props.bedroom.min} max={this.props.bedroom.max} handle={handles} marks={this.marks("bedroom")} onChange={this.setBedrooms} defaultValue={[this.props.bedroom.min, this.props.bedroom.max]}/>
                   </div>
                 </div>
                 <div className='ui divided list items'>
@@ -197,7 +209,6 @@ class SearchApp extends React.Component {
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -205,6 +216,15 @@ class SearchApp extends React.Component {
   }
 }
 
-SearchApp.propTypes = {};
+SearchApp.propTypes = {
+  price: {
+    min: PropTypes.integer,
+    max: PropTypes.integer
+  },
+  bedroom: {
+    min: PropTypes.integer,
+    max: PropTypes.integer
+  }
+};
 
 module.exports = SearchApp

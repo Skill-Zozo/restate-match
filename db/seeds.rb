@@ -23,7 +23,7 @@ owner = User.create email: "testowner@test.com", password:"str0ngpassw0rd"
     lounge_description: "Lounge with 55 inch TV, sofa and same room as kitchen",
     kitchen_description: "Kitchen with sink, cardboards and stove",
     garage_count: 0,
-    garage_description: nil
+    garage_description: nil,
     internet_access: "Fibre",
     furnished: true,
     near: "UCT, Red Cross Children's Hospital, Rondebosch Medical Centre, Rondebosch Commons, Riverside Mall"
@@ -43,7 +43,7 @@ owner = User.create email: "testowner@test.com", password:"str0ngpassw0rd"
     lounge_description: "Barchelor Pad",
     kitchen_description: "Kitchen with sink, cardboards and stove",
     garage_count: 0,
-    garage_description: nil
+    garage_description: nil,
     internet_access: nil,
     furnished: true,
     near: "Shoprite, Mowbray Police Station, KFC"
@@ -67,4 +67,6 @@ owner = User.create email: "testowner@test.com", password:"str0ngpassw0rd"
     furnished: true,
     near: "Canal Walk Century City, Ratanga Junction, Century CBD"
   }
-].map { |accomadation|  owner.create accomodation }
+].map do |accomodation|
+  owner.accomodations.create accomodation
+end
