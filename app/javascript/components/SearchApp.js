@@ -142,45 +142,45 @@ class SearchApp extends React.Component {
 
           <div className='card' style={{'text-align':'left'}}>
             <div className='row'>
-              <div className='ui centered grid transparent icon input'>
-                <div className='column'><i className='marker larger icon'></i></div>
-                <div className='twelve wide column bordered-bottom'><input type='text' placeholder='location for accomodation...' style={{width: '100%'}}/></div>
+              <div className='ui grid transparent icon input'>
+                <div className='column'><i className='marker icon'></i></div>
+                <div className='four wide column '><input type='text' placeholder='location for accomodation...' style={{width: '100%', border: '0'}}/></div>
               </div>
             </div>
             <br />
-            <br />
             <div className='ui grid row'>
-              <div className='ui eight wide column unstackable items'>
+              <div className='ui fourteen wide column unstackable list items'>
                 <div className='item'>
                   <div className="ui horizontal left-borded-label">Price</div>
-                  <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
+                  <div className="middle aligned content" style={{margin: '0px 10px 0px 10px'}}>
                     <Range className='column' min={this.props.price.min} max={this.props.price.max} handle={handles} marks={this.marks("price")} defaultValue={[this.props.price.min, this.props.price.max]} onChange={this.setPrice}/>
                   </div>
                 </div>
+                <br />
                 <div className='item'>
                   <div className="ui horizontal left-borded-label"> Bedrooms</div>
-                  <div className="middle aligned content" style={{padding: '5px 0px 0px 5px'}}>
-                    <Range className='column' min={this.props.bedroom.min} max={this.props.bedroom.max} handle={handles} marks={this.marks("bedroom")} onChange={this.setBedrooms} defaultValue={[this.props.bedroom.min, this.props.bedroom.max]}/>
+                  <div className="middle aligned content" style={{margin: '0px 10px 0px 10px'}}>
+                    <Range className='column' min={this.props.bedroom.min} max={this.props.bedroom.max} handle={handles} marks={this.marks("bedroom")} onChange={this.setBedrooms} defaultValue={[0, this.props.bedroom.max]}/>
                   </div>
                 </div>
-                <div className='ui divided list items'>
-                  <div className='item'>
-                    <i className='tv icon'></i>
-                    <input className='leftpad' type='checkbox' name='furnished' onChange={(e) => {this.setState({furniture: e.target.checked})}}/>
-                    <label className='leftpad'>Furnished</label>
-                  </div>
+              </div>
+              <div className='ui eight wide column divided list items'>
+                <div className='item'>
+                  <i className='tv icon'></i>
+                  <input className='leftpad' type='checkbox' name='furnished' onChange={(e) => {this.setState({furniture: e.target.checked})}}/>
+                  <label className='leftpad'>Furnished</label>
+                </div>
 
-                  <div className='item'>
-                    <i className='world icon'></i>
-                    <input className='leftpad' type='checkbox' name='internet' onChange={(e) => {this.setState({internet_access: e.target.checked})}}/>
-                    <label className='leftpad'>Internet Access</label>
-                  </div>
+                <div className='item'>
+                  <i className='world icon'></i>
+                  <input className='leftpad' type='checkbox' name='internet' onChange={(e) => {this.setState({internet_access: e.target.checked})}}/>
+                  <label className='leftpad'>Internet Access</label>
+                </div>
 
-                  <div className='item'>
-                    <i className='car icon'></i>
-                    <input className='leftpad' type='checkbox' name='parking' onChange={(e) => {this.setState({parking: e.target.checked})}}/>
-                    <label className='leftpad'>Parking</label>
-                  </div>
+                <div className='item'>
+                  <i className='car icon'></i>
+                  <input className='leftpad' type='checkbox' name='parking' onChange={(e) => {this.setState({parking: e.target.checked})}}/>
+                  <label className='leftpad'>Parking</label>
                 </div>
               </div>
 
