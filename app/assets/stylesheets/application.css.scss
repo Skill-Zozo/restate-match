@@ -34,6 +34,14 @@ input {
   border-bottom: 2px solid #1E9EC9;
 }
 
+.spaced:last-child {
+  margin-bottom: 0px;
+}
+
+.spaced:nth-child(n) {
+  margin-bottom: 30px!important;
+}
+
 .menu {
   // background-color: black!important;
 }
