@@ -3,6 +3,8 @@ import Modal from './presentation/Modal'
 import RangeList from './containers/RangeList'
 import IconCheckedList from './containers/IconCheckedList'
 import CheckedList from './containers/CheckedList'
+import { Provider } from 'react-redux'
+import store from './store'
 
 var React = require('react');
 var PropTypes = require('prop-types');
@@ -29,7 +31,9 @@ class SearchApp extends React.Component {
       hospital: false,
       train: false,
       taxi: false,
-      beach: false
+      beach: false,
+      view: 'NO_MATCHES',
+      firstContainerView: ""
     }
   }
 
@@ -49,10 +53,6 @@ class SearchApp extends React.Component {
         max: values[1]
       }
     })
-  }
-
-  marks(item) {
-
   }
 
   submitForm = () => {
@@ -92,70 +92,94 @@ class SearchApp extends React.Component {
     this.setState(updatedState)
   }
 
+  handleLocationInput = (event) => {
+    this.setState({location: event.target.value})
+  }
+
+  showMatches = ({ dispatch }) => {
+    // move the bedPrice
+    let bedroomPrice = $('accomodationRequestCardFirstChild').children('#bedroomPriceContainer')
+    $('accomodationRequestCardFirstChild').children('#bedroomPriceContainer').remove()
+    $('#accomodationRequestCard').before(bedroomPrice)
+    $('sizedParentContainer').before("<div></div>").addClass('column').attr('name', 'offsetColumn')
+
+    // let redux move the rest
+    dispatch()
+  }
+
+  resetView = () => {
+
+  }
+
   render () {
     return  (
-      <div className="ui grid">
-        <div className="centered twelve wide column">
+      <Provider store={store}>
+        <div className="ui grid" id="fullWidthGrid">
 
-          <Loading status={this.state.loadingStatus}/>
-          <Modal modalMessage={this.state.modalMessage} requestSuccessful={this.state.requestSuccessful}/>
+          <div className={this.state.firstContainerView} id="sizedParentContainer">
 
-          <div className='card' style={{'text-align':'left'}}>
+            <Loading status={this.state.loadingStatus}/>
+            <Modal  modalMessage={this.state.modalMessage}
+                    requestSuccessful={this.state.requestSuccessful} onSuccess={this.showMatches}/>
 
-            <div className='row'>
-              <div className='ui grid transparent icon input'>
-                <div className='column'><i className='marker icon'></i></div>
-                <div className='four wide column '><input type='text' placeholder='location for accomodation...' style={{width: '100%', border: '0'}}/></div>
+            <div className='card' id="accomodationRequestCard" style={{'textAlign':'left'}}>
+
+              <div className='row'>
+                <div className='ui fluid icon input'>
+                  <i className='marker icon'></i>
+                  <input type='text' placeholder='location for accomodation...'
+                          value={this.state.location} onChange={this.handleLocationInput}/>
+                </div>
               </div>
-            </div>
 
-            <br />
-            
-            <div className='ui grid'>
+              <br />
               
-              <div className='ui fourteen wide column unstackable list items' style={{marginBottom: '0px', paddingBottom: '0px'}}>
-                <RangeList rangeItems={
-                  [
-                    {name: "price", setItemValue: this.setPrice, ...this.state.price},
-                    {name: "bedroom", setItemValue: this.setBedrooms, ...this.state.bedrooms}
-                  ]
-                } />
-              </div>
-            
-              <div className='ui eight wide column divided list items' style={{marginTop: '0px'}}>
-                <IconCheckedList setValueFn={this.setCheckedFn}
-                  items={[
-                    {name: "furnished", label: "Furnished", icon: "tv"},
-                    {name: "internet_access", label: "Internet Access", icon: "world"},
-                    {name: "parking", label: "Parking", icon: "car"},
-                  ]} 
-                />
-              </div>
-
-              <div className='eight wide column' style={{marginTop: '0px'}}>
-                Close to (within a 5km radius of)
-                <div className='ui divided list'>
-                  <CheckedList setValueFn={this.setCheckedFn}
-                  items={[
-                    {name: 'hospital', label: "Hospital"},
-                    {name: 'taxi', label: "Taxi Stop"},
-                    {name: 'train', label: 'Train Station'},
-                    {name: 'beach', label: "Beach"}
-                  ]}
-                />
+              <div className='ui grid' id="accomodationRequestCardFirstChild">
+                
+                <div className='ui fourteen wide column unstackable list items' style={{marginBottom: '0px', paddingBottom: '0px'}} name="bedroomPriceContainer">
+                  <RangeList rangeItems={
+                    [
+                      {name: "price", setItemValue: this.setPrice, ...this.state.price},
+                      {name: "bedroom", setItemValue: this.setBedrooms, ...this.state.bedrooms}
+                    ]
+                  } />
+                </div>
+              
+                <div className='ui eight wide column divided list items' style={{marginTop: '0px'}}>
+                  <IconCheckedList setValueFn={this.setCheckedFn}
+                    items={[
+                      {name: "furnished", label: "Furnished", icon: "tv"},
+                      {name: "internet_access", label: "Internet Access", icon: "world"},
+                      {name: "parking", label: "Parking", icon: "car"},
+                    ]} 
+                  />
                 </div>
 
-                <br />
-                <br />
+                <div className='eight wide column' style={{marginTop: '0px'}}>
+                  Close to (within a 5km radius of)
+                  <div className='ui divided list'>
+                    <CheckedList setValueFn={this.setCheckedFn}
+                    items={[
+                      {name: 'hospital', label: "Hospital"},
+                      {name: 'taxi', label: "Taxi Stop"},
+                      {name: 'train', label: 'Train Station'},
+                      {name: 'beach', label: "Beach"}
+                    ]}
+                  />
+                  </div>
 
-                <div style={{position: 'absolute', bottom:'10%', right:'10%'}}>
-                  <button className="ui primary basic button" onClick={this.submitForm}>Submit Request</button>
+                  <br />
+                  <br />
+
+                  <div style={{position: 'absolute', bottom:'10%', right:'10%'}}>
+                    <button className="ui primary basic button" onClick={this.submitForm}>Submit Request</button>
+                  </div>
                 </div>
-              </div>
-            </div>              
+              </div>              
+            </div>
           </div>
         </div>
-      </div>
+      </Provider>
     );
   }
 }

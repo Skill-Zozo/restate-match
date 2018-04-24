@@ -8,7 +8,7 @@ class CheckedList extends Component {
 
 	render() {
 		return this.state.items.map((item) => (
-			<div className='item'>
+			<div className='item' key={item.name}>
         <input type='checkbox' name={item.name} onChange={this.state.setValueFn}/> <label>{item.label}</label>
       </div>
     ))
