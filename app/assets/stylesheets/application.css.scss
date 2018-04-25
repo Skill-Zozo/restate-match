@@ -72,6 +72,25 @@ input {
   margin-top: 10px;
 }
 
+.onTop {
+  position: absolute;
+  top: 40%;
+  margin: 0;
+  z-index: 1;
+}
+
+.below {
+  position: relative;
+}
+
+.toTheRight {
+  right: 0
+}
+
+.toTheLeft {
+  left: 0
+}
+
 .vcentered {
   position: relative;
   top: 50%;
