@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   post 'accomodation/search', to: 'accomodation#search'
 
   put 'accomodation/request', to: 'accomodation#new_request'
+
+  get 'accomodation/matches', to: 'accomodation#matches'
 end
