@@ -6,7 +6,8 @@ import CheckedList from '../containers/CheckedList'
 import { connect} from 'react-redux'
 import {
   showAccomodationMatches,
-  resetToAccomodationRequestForm
+  resetToAccomodationRequestForm,
+  saveAccomodationReq
 } from '../actions/actions'
 
 var React = require('react');
@@ -16,25 +17,27 @@ class AccomodationRequestForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      filter: {
+        furnished: false,
+        price: {
+          min: this.props.price.min,
+          max: this.props.price.max
+        },
+        bedrooms: {
+          min: this.props.bedroom.min,
+          max: this.props.bedroom.max
+        },
+        internet_access: false,
+        parking: false,
+        hospital: false,
+        train: false,
+        taxi: false,
+        beach: false
+      },
       modalMessage: "",
+      requestToCreateAccomReq: 'NOT_SUBMITTED', // NOT_SUBMITTED -> IN_PROGRESS -> SUCCESSFUL || FAILED
       loadingStatus: "inactive",
-      requestSuccessful: false,
       location: "",
-      furnished: false,
-      price: {
-        min: this.props.price.min,
-        max: this.props.price.max
-      },
-      bedrooms: {
-        min: this.props.bedroom.min,
-        max: this.props.bedroom.max
-      },
-      internet_access: false,
-      parking: false,
-      hospital: false,
-      train: false,
-      taxi: false,
-      beach: false,
       view: 'NO_MATCHES',
       cardViewSettings: 'centered twelve wide column',
       listViewSettings: 'eight wide column'
@@ -42,62 +45,53 @@ class AccomodationRequestForm extends React.Component {
   }
 
   setPrice = (values) => {
+    let filter = this.state.filter
     this.setState({
-      price: {
-        min: values[0],
-        max: values[1]
+      filter: {
+        ...filter,
+        price: {
+          min: values[0],
+          max: values[1]
+        }
       }
     })
   }
 
   setBedrooms = (values) => {
+    let filter = this.state.filter
     this.setState({
-      bedrooms: {
-        min: values[0],
-        max: values[1]
+      filter: {
+        ...filter,
+        bedrooms: {
+          min: values[0],
+          max: values[1]
+        }
       }
     })
   }
 
-  submitForm = () => {
-    let app = this
-    let state = this.state
-    app.setState({loadingStatus: "active"})
-    $.ajax({
-      url: '/accomodation/request',
-      type: 'PUT',
-      data: state,
-      datatype: "json",
-      success: function(result) {
-        app.setState({
-          modalMessage: "Your request has been successfully submitted",
-          requestSuccessful: true
-        })
-        app.setState({loadingStatus: "inactive"})
-        app.showRequestSuccessModal()
-      }, error: function(err) {
-        app.setState({
-          modalMessage: `Request for accomodation failed\nError code: ${err.status}\nResponse from server: ${err.responseText.substring(0,256)}...`,
-          requestSuccessful: false
-       })
-        app.setState({loadingStatus: "inactive"})
-        app.showRequestSuccessModal()
-      }
-    })
+  submitForm = ({ dispatch }) => {
+    this.props.dispatch(saveAccomodationReq(this.state))
   }
 
   showRequestSuccessModal = () => {
-    $('#modal').modal('show')
+    
   }
 
   setCheckedFn = (event) => {
-    let updatedState = {}
-    updatedState[event.target.name] = event.target.checked
+    let updatedState = {filter: this.state.filter}
+    updatedState.filter[event.target.name] = event.target.checked
     this.setState(updatedState)
   }
 
   handleLocationInput = (event) => {
-    this.setState({location: event.target.value})
+    let filter = this.state.filter
+    this.setState({
+      filter: {
+        ...filter,
+        location: event.target.value
+      }
+    })
   }
 
   showMatches = ({ dispatch }) => {
@@ -115,12 +109,13 @@ class AccomodationRequestForm extends React.Component {
   }
 
   render () {
+    const { loadingStatus, modalMessage, requestToCreateAccomReq } = this.props || this.state
     return  (
       <div className={this.props.cardViewSettings} id="sizedParentContainer">
 
-        <Loading status={this.state.loadingStatus}/>
-        <Modal  modalMessage={this.state.modalMessage}
-                requestSuccessful={this.state.requestSuccessful} onSuccess={this.showMatches}/>
+        <Loading status={loadingStatus}/>
+        <Modal  modalMessage={modalMessage}
+                status={requestToCreateAccomReq} onSuccess={this.showMatches}/>
 
         <div className='card' id="accomodationRequestCard" style={{'textAlign':'left'}}>
 
@@ -139,8 +134,8 @@ class AccomodationRequestForm extends React.Component {
             <div className='ui fourteen wide column unstackable list items' style={{marginBottom: '0px', paddingBottom: '0px'}} id="bedroomPriceContainer">
               <RangeList rangeItems={
                 [
-                  {name: "price", setItemValue: this.setPrice, ...this.state.price},
-                  {name: "bedroom", setItemValue: this.setBedrooms, ...this.state.bedrooms}
+                  {name: "price", setItemValue: this.setPrice, ...this.state.filter.price},
+                  {name: "bedroom", setItemValue: this.setBedrooms, ...this.state.filter.bedrooms}
                 ]
               } />
             </div>
@@ -183,11 +178,14 @@ class AccomodationRequestForm extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const { listViewSettings, cardViewSettings, view } = state
+  const { listViewSettings, cardViewSettings, view, requestToCreateAccomReq, loadingStatus, modalMessage } = state
   return {
     listViewSettings: listViewSettings,
     cardViewSettings: cardViewSettings,
-    view: view
+    view: view,
+    requestToCreateAccomReq: requestToCreateAccomReq,
+    loadingStatus: loadingStatus,
+    modalMessage: modalMessage
   }
 }
 

@@ -22,6 +22,26 @@ let SetView = (state = defaultView, action) => {
 				listViewSettings: 'fifteen wide column'
 
 			}
+		case 'START_REQUEST_TO_SAVE_ACCOMODATIONREQ':
+			return {
+				...state,
+				loadingStatus: "active",
+				requestToCreateAccomReq: 'IN_PROGRESS'
+			}
+		case 'REQUEST_TO_CREATE_ACCOMREQ_SUCCESSFUL':
+			return {
+				...state,
+				loadingStatus: 'inactive',
+				requestToCreateAccomReq: 'SUCCESSFUL',
+				modalMessage: 'Your accomodation request has been successfully submitted'
+			}
+		case 'REQUEST_TO_CREATE_ACCOMREQ_FAILED': 
+			return {
+				...state,
+				loadingStatus: 'inactive',
+				requestToCreateAccomReq: 'FAILED',
+				modalMessage: action.error
+			}
 		default:
 			return state
 	}

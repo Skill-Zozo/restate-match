@@ -61,7 +61,7 @@ class ListingContainer extends Component {
 		return (
 			<div className="ui raised card three wide column">
         <div className="ui image below" onMouseOver={this.showArrows} onMouseLeave={this.hideArrows}>
-        	<button class="circular ui icon primary basic button onTop toTheLeft" onClick={this.shiftIndexToTheLeft} style={{visibility: this.state.arrows.left, cursor: "pointer"}}>
+        	<button className="circular ui icon primary basic button onTop toTheLeft" onClick={this.shiftIndexToTheLeft} style={{visibility: this.state.arrows.left, cursor: "pointer"}}>
         	 <i className="angle large left icon"></i>
           </button>
           <button className="circular ui primary basic icon button onTop toTheRight" onClick={this.shiftIndexToTheRight} style={{visibility: this.state.arrows.right, cursor: "pointer"}}>

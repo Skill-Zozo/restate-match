@@ -1,11 +1,21 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+import { createStore, applyMiddleware } from 'redux'
 import SetView from './reducers/SetView'
 import AccomodationRequestForm from './containers/AccomodationRequestForm'
 import MatchesListings from './containers/MatchesListings'
 
-const store = createStore(SetView)
+const loggerMiddleware = createLogger()
+
+const store = createStore(
+  SetView,
+  applyMiddleware(
+    thunkMiddleware,
+    loggerMiddleware
+  )
+)
 
 class SearchApp extends Component {
   constructor(props) {

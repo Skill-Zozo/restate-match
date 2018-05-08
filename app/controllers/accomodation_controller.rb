@@ -10,7 +10,7 @@ class AccomodationController < ApplicationController
   end
 
   def new_request
-    render {
+    render json: {
       errors: accomodation_request.errors.full_message,
       result_code: 'bad_request',
       status: '400',
@@ -21,7 +21,7 @@ class AccomodationController < ApplicationController
       data: {
         request: accomodation_request.id
       },
-      result_code: 'ok,'
+      result_code: 'ok,',
       status: '200',
       code: 200
     }
@@ -46,7 +46,7 @@ class AccomodationController < ApplicationController
     @accomodation_request ||= AccomodationRequest.create(accomodation_request_params.merge(user_id: current_user.id))
   end
   
-  def please_format_these_params
+  def accomodation_request_params
     raw_params = params.permit(:taxi, :furnished, :internet_access, :beach, :hospital, :parking, :location, :train, price: [:min, :max], bedrooms: [:min, :max])
     processed_params = {
       min_price: raw_params[:price][:min],

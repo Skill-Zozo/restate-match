@@ -20,6 +20,8 @@
     "react-redux": "^5.0.7",
     "react_ujs": "^2.4.4",
     "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
     "semantic": "^0.0.1",
     "semantic-ui": "^2.2.14"
   },
