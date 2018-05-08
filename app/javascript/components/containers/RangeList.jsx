@@ -43,7 +43,7 @@ class RangeList extends Component {
 	}
 
 	render () {
-		let items = this.state.rangeItems 
+		let items = this.state.rangeItems
 		return items.map((rangeItem, i) => (
 				<div className='item row spaced' key={rangeItem.name}>
           <div className="ui horizontal left-borded-label"> {rangeItem.name}</div>

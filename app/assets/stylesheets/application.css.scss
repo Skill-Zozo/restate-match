@@ -72,10 +72,35 @@ input {
   margin-top: 10px;
 }
 
+.onTop {
+  position: absolute;
+  top: 40%;
+  margin: 3px!important;
+  z-index: 1;
+}
+
+.below {
+  position: relative;
+}
+
+.toTheRight {
+  right: 0;
+}
+
+.toTheLeft {
+  left: 0
+}
+
 .vcentered {
   position: relative;
   top: 50%;
   transform: translate(0, -50%);
+}
+
+.selectedImage {
+  border-bottom: 3px solid #1E9EC9;
+  border-right: 3px solid #1E9EC9;
+  padding: 0px 2px 2px 0px;
 }
 
 .vhcentered {

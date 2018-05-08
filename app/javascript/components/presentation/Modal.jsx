@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 class Modal extends Component {
 	constructor(props) {
 		super(props)
+		this.state = { ...props }
 	}
 
 	render() {
@@ -13,7 +14,7 @@ class Modal extends Component {
         <div className="content"> {this.props.modalMessage}</div>
         <div className="actions">
           <div className="ui black deny button"> Close </div>
-          {this.props.requestSuccessful && <div className="ui positive right button">View Matches</div>}
+          {this.props.status=='SUCCESSFUL' && <div className="ui positive right button" onClick={this.state.onSuccess}>View Matches</div>}
         </div>
       </div>
 		)
