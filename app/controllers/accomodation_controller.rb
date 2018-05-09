@@ -27,6 +27,29 @@ class AccomodationController < ApplicationController
     }
   end
 
+  # return data like so
+  # {
+  #   data: [
+  #     {
+  #       price: 124,
+  #       bedroom_count: 5,
+  #       bathroom_count: 9,
+  #       garage_count: 78,
+  #       ad_title: "brilliant house at Mowbray",
+  #       images: [
+  #         image001,
+  #         image002,
+  #         image003
+  #       ]
+  #     },
+      
+  #     {
+  #       ...
+  #     },
+
+  #     ...
+  #   ]
+  # }
   def matches
     render json: {
       data: find_matches,
@@ -63,7 +86,15 @@ class AccomodationController < ApplicationController
     bedroom_sql_query = "bedroom_count between #{acc_request.min_bedroom} and #{acc_request.max_bedroom}"
     furnished_sql_query = acc_request.furnished ? "furnished = 't'" : ""
     internet_sql_query = acc_request.internet_access ? "internet_access = 't'" : ""
-    Accomodation.where([bedroom_sql_query, price_sql_query, furnished_sql_query, internet_sql_query].select(&:present?).join(' AND '))
+    matching_listings = Accomodation.where([bedroom_sql_query, price_sql_query, furnished_sql_query, internet_sql_query].select(&:present?).join(' AND '))
+    matching_listings.map do |listing|
+      description = [
+        "Bedroom: " + listing.bedroom_description,
+        "Kitchen: " + listing.kitchen_description,
+        "Bathroom: " + listing.bathroom_description
+      ].join('\n')
+      listing.as_json.merge(description: description)
+    end
   end
 
 end

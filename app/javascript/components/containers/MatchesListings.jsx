@@ -15,6 +15,12 @@ import Steve from 'images/steve.jpg'
 import Stevie from 'images/stevie.jpg'
 import Veronika from 'images/veronika.jpg'
 
+// <ListingContainer images={generateImageHashesFrom([Ade, Daniel, Veronika, Jenny])}/>
+// 							<ListingContainer images={generateImageHashesFrom([Elloit, Helen, Chris])} />
+// 							<ListingContainer images={generateImageHashesFrom([Justen, Nan, Steve, Veronika])} />
+// 							<ListingContainer images={generateImageHashesFrom([Stevie, Jenny, Daniel])} />
+// 							<ListingContainer images={generateImageHashesFrom([Veronika, Ade, Helen])} />	
+
 function generateImageHashesFrom(images) {
 	return images.map(function(image, idx){
 		return { name: `${image}`, image: image, selectionClass: idx==0 ? "selectedImage " : "" }
@@ -31,15 +37,16 @@ class MatchesListings extends React.Component {
 
 	render() {
 		let show = this.props.view == "SHOW_MATCHES"
+		const { matches } = this.props
 		return (
         <div className={show ? "twelve wide column" : ""}> { 
         	show && (
         		<div className="ui list cards">
-    					<ListingContainer images={generateImageHashesFrom([Ade, Daniel, Veronika, Jenny])}/>
-							<ListingContainer images={generateImageHashesFrom([Elloit, Helen, Chris])} />
-							<ListingContainer images={generateImageHashesFrom([Justen, Nan, Steve, Veronika])} />
-							<ListingContainer images={generateImageHashesFrom([Stevie, Jenny, Daniel])} />
-							<ListingContainer images={generateImageHashesFrom([Veronika, Ade, Helen])} />	            
+        			{
+        				matches.map((match) => {
+        					<ListingContainer images={generateImageHashesFrom(match.images)} match={match} />
+        				})
+        			}            
         		</div>
         	)
     		}

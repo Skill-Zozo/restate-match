@@ -79,15 +79,19 @@ class ListingContainer extends Component {
         </div>
 
         <div className="content">
-          <label className="header"> House available at Centurion </label>
+        	<div className="header">
+          	<label className="left aligned"> House available at Centurion </label>
+          	<label className="right aligned red statistic"> R{this.state.match.price} </label>
+          </div> 
           <div className="meta">
-            <p> Manchester City winning represents the most depressing period
-                the history of Englisg football, should not be tolerated honestly </p>
+            <p> {this.state.match.description} </p>
           </div>
         </div>
         
         <div className="extra content">
-          <span><i className="bed icon"></i> 2</span>
+          <span><i className="bed right icon"></i> {this.state.match.bedroom_count} </span>
+          <span><i className="bath center icon"></i> {this.state.match.bathroom_count} </span>
+          <span><i className="car left icon"></i> {this.state.match.garage_count} </span>
         </div>
       </div>
 		)
