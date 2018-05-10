@@ -4,14 +4,14 @@ class Loading extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			status: props.status
+			...props
 		}
 	}
 
 	render() {
 		return (
-			<div className={this.props.status + " ui dimmer"} id="loading">
-        <div className="ui massive indeterminate text loader">Submitting request for accomodation</div>
+			<div className="ui dimmer" id="loading">
+        <div className="ui huge indeterminate text loader">{this.props.message}</div>
       </div>
 		)
 	}

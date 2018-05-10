@@ -1,9 +1,55 @@
  // essentially send avtions to the store
 
 export function showAccomodationMatches(state) {
+	return function(dispatch) {
+		dispatch(startRequestToFindMatches(state))
+
+		return createFilterRequest(state, dispatch)
+	}
+}
+
+function createFilterRequest(state, dispatch) {
+	let filter  = state.filter
+	$.ajax({
+		url: '/accomodation/matches',
+		data: filter,
+		type: 'GET',
+		datatype: 'json',
+		success: function(result) {
+			console.log(result)
+			dispatch(successfulyFinishedRequestForMatches(result))
+		},
+		error: function(err) {
+			dispatch(failedToFetchMatches(err))
+		}
+	})
+}
+
+export function adjustAccomReqForm(state) {
 	return {
 		type: "SET_TO_SHOW_MATCHES",
 		state
+	}
+}
+
+export function startRequestToFindMatches(state) {
+	return {
+		type: "FETCHING_MATCHES",
+		state
+	}
+}
+
+export function successfullyFinishedRequestForMatches(matches) {
+	return {
+		type: 'REQUEST_FOR_MATCHES_SUCCESSFUL',
+		matches
+	}
+}
+
+export function failedToFetchMatches(matches) {
+	return {
+		type: 'REQUEST_FOR_MATCHES_FAILED',
+		matches
 	}
 }
 

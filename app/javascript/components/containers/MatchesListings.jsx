@@ -36,11 +36,17 @@ class MatchesListings extends React.Component {
 	}
 
 	render() {
-		let show = this.props.view == "SHOW_MATCHES"
+		let loading = this.props.requestToFilter == 'IN_PROGRESS'
+		let showMatches = this.props.requestToFilter == 'SUCCESSFUL'
+		let failedToFindMatches = this.props.requestToFilter == 'FAILED'
 		const { matches } = this.props
 		return (
-        <div className={show ? "twelve wide column" : ""}> { 
-        	show && (
+        <div className={show ? "twelve wide column" : ""}> 
+        {
+        	loading && <Loading message="Finding your matches"/>
+        }
+        {
+        	showMatches && (
         		<div className="ui list cards">
         			{
         				matches.map((match) => {
@@ -49,6 +55,9 @@ class MatchesListings extends React.Component {
         			}            
         		</div>
         	)
+    		}
+    		{
+    			failedToFindMatches && <div>NO MATCHES, SOZ</div>
     		}
       </div>
 		)

@@ -113,7 +113,9 @@ class AccomodationRequestForm extends React.Component {
     return  (
       <div className={this.props.cardViewSettings} id="sizedParentContainer">
 
-        <Loading status={loadingStatus}/>
+        {
+          this.props.requestToCreateAccomReq == 'IN_PROGRESS' && <Loading status={loadingStatus} message="Submitting request for accomodation"/>
+        }
         <Modal  modalMessage={modalMessage}
                 status={requestToCreateAccomReq} onSuccess={this.showMatches}/>
 
