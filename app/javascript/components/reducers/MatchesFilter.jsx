@@ -10,13 +10,17 @@ let MatchesFilter = (state = {}, action) => {
 		case 'REQUEST_FOR_MATCHES_SUCCESSFUL':
 			return {
 				...state,
+				matches: action.matches,
 				requestToFilter: 'SUCCESSFUL'
 			}
 		case 'REQUEST_FOR_MATCHES_FAILED':
 			return {
 				...state,
+				matches: [],
 				requestToFilter: 'FAILED'
 			}
+		default:
+			return state
 	}
 }
 

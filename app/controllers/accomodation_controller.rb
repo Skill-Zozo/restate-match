@@ -81,11 +81,12 @@ class AccomodationController < ApplicationController
   end
 
   def find_matches
-    acc_request = AccomodationRequest.find(params.permit(:request_id))
-    price_sql_query = "price between #{acc_request.min_price} and #{acc_request.max_price}"
-    bedroom_sql_query = "bedroom_count between #{acc_request.min_bedroom} and #{acc_request.max_bedroom}"
-    furnished_sql_query = acc_request.furnished ? "furnished = 't'" : ""
-    internet_sql_query = acc_request.internet_access ? "internet_access = 't'" : ""
+    # binding.pry
+    acc_request = params.permit(:request_id).empty? ? accomodation_request_params : AccomodationRequest.find_by(id: params.permit(:request_id))
+    price_sql_query = "price between #{acc_request[:min_price]} and #{acc_request[:max_price]}"
+    bedroom_sql_query = "bedroom_count between #{acc_request[:min_bedroom]} and #{acc_request[:max_bedroom]}"
+    furnished_sql_query = acc_request[:furnished] ? "furnished = 't'" : ""
+    internet_sql_query = acc_request[:internet_access] ? "internet_access = 't'" : ""
     matching_listings = Accomodation.where([bedroom_sql_query, price_sql_query, furnished_sql_query, internet_sql_query].select(&:present?).join(' AND '))
     matching_listings.map do |listing|
       description = [

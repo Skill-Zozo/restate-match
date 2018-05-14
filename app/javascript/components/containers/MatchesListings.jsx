@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ListingContainer from './ListingContainer'
+import Loading from '../presentation/Loading'
 
 // images
 import Ade from 'images/ade.jpg'
@@ -39,9 +40,16 @@ class MatchesListings extends React.Component {
 		let loading = this.props.requestToFilter == 'IN_PROGRESS'
 		let showMatches = this.props.requestToFilter == 'SUCCESSFUL'
 		let failedToFindMatches = this.props.requestToFilter == 'FAILED'
-		const { matches } = this.props
+		let active = this.props.view == "SHOW_MATCHES"
+		let images = [
+			[Ade, Daniel, Veronika, Jenny],
+			[Elloit, Helen, Chris],
+			[Justen, Nan, Steve, Veronika],
+			[Stevie, Jenny, Daniel],
+			[Veronika, Ade, Helen]
+		]
 		return (
-        <div className={show ? "twelve wide column" : ""}> 
+        <div className={active ? "twelve wide column" : ""}> 
         {
         	loading && <Loading message="Finding your matches"/>
         }
@@ -49,9 +57,9 @@ class MatchesListings extends React.Component {
         	showMatches && (
         		<div className="ui list cards">
         			{
-        				matches.map((match) => {
-        					<ListingContainer images={generateImageHashesFrom(match.images)} match={match} />
-        				})
+        				this.props.matches.map((match, idx) => (
+        					<ListingContainer images={generateImageHashesFrom(images[idx])} match={match} />
+        				))
         			}            
         		</div>
         	)
@@ -65,9 +73,11 @@ class MatchesListings extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const { view } = state
-
+  const { matches, requestToFilter } = state.MatchesFilter
+  const { view } = state.SetView
   return {
+    matches: matches,
+    requestToFilter: requestToFilter,
     view: view
   }
 }

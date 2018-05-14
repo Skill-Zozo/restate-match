@@ -7,7 +7,8 @@ import { connect} from 'react-redux'
 import {
   showAccomodationMatches,
   resetToAccomodationRequestForm,
-  saveAccomodationReq
+  saveAccomodationReq,
+  fetchFilteredMatches
 } from '../actions/actions'
 
 var React = require('react');
@@ -170,6 +171,13 @@ class AccomodationRequestForm extends React.Component {
 
               <div style={{position: 'absolute', bottom:'10%', right:'10%'}}>
                 <button className="ui primary basic button" onClick={this.submitForm}>Submit Request</button>
+                {
+                  this.props.view == 'SHOW_MATCHES' && (
+                    <button onClick={this.props.dispatch(fetchFilteredMatches(this.state))} className="ui primary button">
+                      Filter
+                    </button>
+                  )
+                }
               </div>
             </div>
           </div>              
@@ -180,7 +188,7 @@ class AccomodationRequestForm extends React.Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const { listViewSettings, cardViewSettings, view, requestToCreateAccomReq, loadingStatus, modalMessage } = state
+  const { listViewSettings, cardViewSettings, view, requestToCreateAccomReq, loadingStatus, modalMessage } = state.SetView
   return {
     listViewSettings: listViewSettings,
     cardViewSettings: cardViewSettings,

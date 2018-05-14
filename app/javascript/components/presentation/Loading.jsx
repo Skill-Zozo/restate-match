@@ -10,7 +10,7 @@ class Loading extends Component {
 
 	render() {
 		return (
-			<div className="ui dimmer" id="loading">
+			<div className="ui active dimmer" id="loading">
         <div className="ui huge indeterminate text loader">{this.props.message}</div>
       </div>
 		)

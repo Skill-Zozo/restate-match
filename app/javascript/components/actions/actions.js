@@ -2,6 +2,16 @@
 
 export function showAccomodationMatches(state) {
 	return function(dispatch) {
+		dispatch(adjustAccomReqForm(state))
+		
+		dispatch(startRequestToFindMatches(state))
+
+		return createFilterRequest(state, dispatch)
+	}
+}
+
+export function fetchFilteredMatches(state) {
+	return function(dispatch) {
 		dispatch(startRequestToFindMatches(state))
 
 		return createFilterRequest(state, dispatch)
@@ -13,11 +23,10 @@ function createFilterRequest(state, dispatch) {
 	$.ajax({
 		url: '/accomodation/matches',
 		data: filter,
-		type: 'GET',
+		type: 'POST',
 		datatype: 'json',
 		success: function(result) {
-			console.log(result)
-			dispatch(successfulyFinishedRequestForMatches(result))
+			dispatch(successfullyFinishedRequestForMatches(state, result.data))
 		},
 		error: function(err) {
 			dispatch(failedToFetchMatches(err))
@@ -39,10 +48,11 @@ export function startRequestToFindMatches(state) {
 	}
 }
 
-export function successfullyFinishedRequestForMatches(matches) {
+export function successfullyFinishedRequestForMatches(state, matches) {
 	return {
 		type: 'REQUEST_FOR_MATCHES_SUCCESSFUL',
-		matches
+		state,
+		matches: matches
 	}
 }
 
