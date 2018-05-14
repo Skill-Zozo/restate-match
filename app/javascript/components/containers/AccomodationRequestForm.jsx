@@ -109,6 +109,10 @@ class AccomodationRequestForm extends React.Component {
 
   }
 
+  filterMatches = () => {
+    this.props.dispatch(fetchFilteredMatches(this.state))
+  }
+
   render () {
     const { loadingStatus, modalMessage, requestToCreateAccomReq } = this.props || this.state
     return  (
@@ -173,7 +177,7 @@ class AccomodationRequestForm extends React.Component {
                 <button className="ui primary basic button" onClick={this.submitForm}>Submit Request</button>
                 {
                   this.props.view == 'SHOW_MATCHES' && (
-                    <button onClick={this.props.dispatch(fetchFilteredMatches(this.state))} className="ui primary button">
+                    <button onClick={this.filterMatches} className="ui primary button">
                       Filter
                     </button>
                   )

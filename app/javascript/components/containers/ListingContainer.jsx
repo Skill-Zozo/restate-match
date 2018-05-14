@@ -59,8 +59,8 @@ class ListingContainer extends Component {
 
 	render() {
 		return (
-			<div className="ui raised card three wide column">
-				<div className='ui red ribbon label'> R{this.state.match.price}</div>
+			<div className="ui raised card three wide column" >
+				<div className='ui red header' style={{margin:'0!important'}}> R{this.state.match.price}</div>
         <div className="ui image below" onMouseOver={this.showArrows} onMouseLeave={this.hideArrows}>
         	<button className="circular ui icon primary basic button onTop toTheLeft" onClick={this.shiftIndexToTheLeft} style={{visibility: this.state.arrows.left, cursor: "pointer"}}>
         	 <i className="angle large left icon"></i>
@@ -82,14 +82,9 @@ class ListingContainer extends Component {
         <div className="content">
         	<div className="header">
           	<label className="left aligned"> House available at Centurion </label>
-          	<label className="right aligned red statistic">  </label>
           </div> 
           <div className="description">
-            { this.state.match.description.split('\n').map((desc) => (
-            		<p>desc</p>
-            		)
-            	)
-          	}
+            { this.state.match.description.split('\\n').map((desc, idx) => <p key={idx}>{desc}</p>) }
           </div>
         </div>
         
