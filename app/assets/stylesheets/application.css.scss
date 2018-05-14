@@ -18,11 +18,17 @@
 @import "semantic-ui";
 
 body {
-  background-color: rgb(240, 240, 240);;
+  background-color: rgb(240, 240, 240);
+  font-size:150%;
 }
 
 input {
   border-bottom: 1px solid #1E9EC9!important;
+}
+
+.description {
+  font-size:0.7em;
+  text-align:left;
 }
 
 .left-borded-label {

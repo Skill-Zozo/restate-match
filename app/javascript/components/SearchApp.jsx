@@ -2,15 +2,20 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import SetView from './reducers/SetView'
+import MatchesFilter from './reducers/MatchesFilter'
 import AccomodationRequestForm from './containers/AccomodationRequestForm'
 import MatchesListings from './containers/MatchesListings'
 
 const loggerMiddleware = createLogger()
+const rootReducer = combineReducers({
+  SetView: SetView,
+  MatchesFilter: MatchesFilter
+})
 
 const store = createStore(
-  SetView,
+  rootReducer,
   applyMiddleware(
     thunkMiddleware,
     loggerMiddleware

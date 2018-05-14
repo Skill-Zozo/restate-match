@@ -59,7 +59,8 @@ class ListingContainer extends Component {
 
 	render() {
 		return (
-			<div className="ui raised card three wide column">
+			<div className="ui raised card three wide column" >
+				<div className='ui red header' style={{margin:'0!important'}}> R{this.state.match.price}</div>
         <div className="ui image below" onMouseOver={this.showArrows} onMouseLeave={this.hideArrows}>
         	<button className="circular ui icon primary basic button onTop toTheLeft" onClick={this.shiftIndexToTheLeft} style={{visibility: this.state.arrows.left, cursor: "pointer"}}>
         	 <i className="angle large left icon"></i>
@@ -79,15 +80,18 @@ class ListingContainer extends Component {
         </div>
 
         <div className="content">
-          <label className="header"> House available at Centurion </label>
-          <div className="meta">
-            <p> Manchester City winning represents the most depressing period
-                the history of Englisg football, should not be tolerated honestly </p>
+        	<div className="header">
+          	<label className="left aligned"> House available at Centurion </label>
+          </div> 
+          <div className="description">
+            { this.state.match.description.split('\\n').map((desc, idx) => <p key={idx}>{desc}</p>) }
           </div>
         </div>
         
         <div className="extra content">
-          <span><i className="bed icon"></i> 2</span>
+          <span className="left floated"><i className="bed icon"></i> {this.state.match.bedroom_count} </span>
+          <span className="center floated"><i className="bath icon"></i> {this.state.match.bathroom_count} </span>
+          <span className="right floated"><i className="car icon"></i> {this.state.match.garage_count} </span>
         </div>
       </div>
 		)
