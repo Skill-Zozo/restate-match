@@ -81,7 +81,6 @@ class AccomodationController < ApplicationController
   end
 
   def find_matches
-    # binding.pry
     acc_request = params.permit(:request_id).empty? ? accomodation_request_params : AccomodationRequest.find_by(id: params.permit(:request_id))
     price_sql_query = "price between #{acc_request[:min_price]} and #{acc_request[:max_price]}"
     bedroom_sql_query = "bedroom_count between #{acc_request[:min_bedroom]} and #{acc_request[:max_bedroom]}"
@@ -90,12 +89,16 @@ class AccomodationController < ApplicationController
     matching_listings = Accomodation.where([bedroom_sql_query, price_sql_query, furnished_sql_query, internet_sql_query].select(&:present?).join(' AND '))
     matching_listings.map do |listing|
       description = [
-        "Bedroom: " + listing.bedroom_description,
-        "Kitchen: " + listing.kitchen_description,
-        "Bathroom: " + listing.bathroom_description
+        "Bedroom: " + slice_to_one_line(listing.bedroom_description),
+        "Kitchen: " + slice_to_one_line(listing.kitchen_description),
+        "Bathroom: " + slice_to_one_line(listing.bathroom_description)
       ].join('\n')
       listing.as_json.merge(description: description)
     end
+  end
+
+  def slice_to_one_line(string)
+    string.length > 20 ? string.slice(0, 20) + '...' : string
   end
 
 end
