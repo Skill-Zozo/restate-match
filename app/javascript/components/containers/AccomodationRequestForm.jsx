@@ -140,10 +140,17 @@ class AccomodationRequestForm extends React.Component {
             
             <div className='ui fourteen wide column unstackable list items' style={{marginBottom: '0px', paddingBottom: '0px'}} id="bedroomPriceContainer">
               <RangeList rangeItems={
-                [
-                  {name: "price", setItemValue: this.setPrice, ...this.state.filter.price},
-                  {name: "bedroom", setItemValue: this.setBedrooms, ...this.state.filter.bedrooms}
-                ]
+                  {
+                    price: {
+                      setItemValue: this.setPrice, 
+                      ...this.state.filter.price
+                    },
+                    bedroom: {
+                      setItemValue: this.setBedrooms, 
+                      ...this.state.filter.bedrooms
+                    }
+                  }
+                }
               } />
             </div>
           
