@@ -6,5 +6,7 @@ class Accomodation < ApplicationRecord
   validates :bedroom_count, presence: true
   validates :bathroom_count, presence: true
 
+  has_many_attached :images
+
 
 end

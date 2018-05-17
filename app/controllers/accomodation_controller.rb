@@ -93,7 +93,7 @@ class AccomodationController < ApplicationController
         "Kitchen: " + slice_to_one_line(listing.kitchen_description),
         "Bathroom: " + slice_to_one_line(listing.bathroom_description)
       ].join('\n')
-      listing.as_json.merge(description: description)
+      listing.as_json.merge(description: description, images: listing.images.attachments.map { |image| url_for(image) } )
     end
   end
 
