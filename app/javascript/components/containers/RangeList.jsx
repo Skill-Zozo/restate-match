@@ -29,7 +29,11 @@ class RangeList extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
+<<<<<<< HEAD
 			...this.props
+=======
+			...this.props.rangeItems
+>>>>>>> 7dd14008f431a9cf283942cf925b350d8c251f0b
 		}
 	}
 
@@ -72,6 +76,7 @@ class RangeList extends Component {
   }
 
 	render () {
+<<<<<<< HEAD
 		let itemsKeys =  _.keys(this.state.rangeItems)
     // console.log(underscore)
     // if(['price'] != undefined) {
@@ -105,6 +110,30 @@ class RangeList extends Component {
         }
       </div>
     )
+=======
+		let itemsKeys = _.keys(this.state.rangeItems)
+		return 
+      <div className='ui grid'>
+        items.map((rangeItemName, i) => (
+          <div className='item row spaced' key={rangeItemName}>
+            <div className="ui column horizontal left-borded-label"> {rangeItemName}</div>
+            <div className="middle twelve column aligned content" style={{margin: '0px 10px 0px 10px'}}>
+              <Range className='column' min={this.state.rangeItem[rangeItemName].min} max={this.state.rangeItem[rangeItemName].max} 
+                      handle={handles} marks={this.marks(this.state.rangeItem[rangeItemName].min, this.state.rangeItem[rangeItemName].max)} style={{fontSize: '150%'}}
+                      onChange={this.setRangeMarks.bind(rangeItemName)} defaultValue={[this.state.rangeItem[rangeItemName].min, this.state.rangeItem[rangeItemName].max]}/>
+              <div className="ui column input focus">
+                <input type="number" placeholder={`${this.state.rangeItem[rangeItemName].min}`} name={rangeItemName} value={this.state.rangeItem[rangeItemName].min} onChange={this.setMin}/>
+              </div>
+              <div className='column'>-</div>
+              <div className="ui column input focus">
+                <input type="number" placeholder={`${this.state.rangeItem[rangeItemName].max}`} name={rangeItemName} value={this.state.rangeItem[rangeItemName].max} onChange={this.setMax}/>
+              </div>
+            </div>
+          </div>
+        )
+      </div>
+		)
+>>>>>>> 7dd14008f431a9cf283942cf925b350d8c251f0b
 	}
 }
 
