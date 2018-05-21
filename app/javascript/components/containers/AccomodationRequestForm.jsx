@@ -124,7 +124,7 @@ class AccomodationRequestForm extends React.Component {
         <Modal  modalMessage={modalMessage}
                 status={requestToCreateAccomReq} onSuccess={this.showMatches}/>
 
-        <div className='card' id="accomodationRequestCard" style={{'textAlign':'left'}}>
+        <div className='card' id="accomodationRequestCard" style={{'textAlign':'left', margin:'0', padding: '2px'}}>
 
           <div className='row'>
             <div className='ui fluid icon input'>
@@ -138,7 +138,7 @@ class AccomodationRequestForm extends React.Component {
           
           <div className='ui grid' id="accomodationRequestCardFirstChild">
             
-            <div className='ui fourteen wide column unstackable list items' style={{marginBottom: '0px', paddingBottom: '0px'}} id="bedroomPriceContainer">
+            <div className='ui sixteen wide column unstackable list items' style={{marginBottom: '0px', paddingBottom: '0px'}} id="bedroomPriceContainer">
               <RangeList rangeItems={
                   {
                     price: {
@@ -151,7 +151,7 @@ class AccomodationRequestForm extends React.Component {
                     }
                   }
                 }
-              } />
+              />
             </div>
           
             <div className={this.props.listViewSettings + ' ui divided list items'} style={{marginTop: '0px'}}>

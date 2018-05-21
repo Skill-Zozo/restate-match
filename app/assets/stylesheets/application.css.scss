@@ -31,8 +31,12 @@ input {
 }
 
 .left-borded-label {
-  border-left: 2px solid #1E9EC9;
-  padding-left: 5px;
+  border-left: 2px solid #1E9EC9!important;
+  border-top: 0px!important;
+  border-right: 0px!important;
+  border-bottom: 0px!important;
+  padding-left: 2px;
+  font-size:100%!important;
 }
 
 .bordered-bottom {
