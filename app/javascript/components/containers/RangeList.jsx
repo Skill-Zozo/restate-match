@@ -73,7 +73,9 @@ class RangeList extends Component {
                 <div className='eleven wide field'>
                   <Range className='column' min={this.state.rangeItems[rangeItemName].min} max={this.state.rangeItems[rangeItemName].max} 
                           handle={handles} marks={this.marks(this.state.rangeItems[rangeItemName].min, this.state.rangeItems[rangeItemName].max)} style={{fontSize: '150%'}}
-                          onChange={this.state.rangeItems[rangeItemName]['setItemValue']} defaultValue={[this.state.rangeItems[rangeItemName].min, this.state.rangeItems[rangeItemName].max]}/>
+                          onChange={this.state.rangeItems[rangeItemName]['setItemValue']} 
+                          value={
+                            [parseInt(this.props.rangeItems[rangeItemName].min || this.state.rangeItems[rangeItemName].min), parseInt(this.props.rangeItems[rangeItemName].max || this.state.rangeItems[rangeItemName].max)]} defaultValue={[this.state.rangeItems[rangeItemName].min, this.state.rangeItems[rangeItemName].max]}/>
                 </div>
                 <div className='two wide field'>
                   <input type="number" placeholder={`${this.state.rangeItems[rangeItemName].min}`} name={rangeItemName} value={this.props.rangeItems[rangeItemName].min} onChange={this.setMin}/>

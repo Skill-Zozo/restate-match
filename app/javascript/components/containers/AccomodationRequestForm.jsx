@@ -126,15 +126,13 @@ class AccomodationRequestForm extends React.Component {
 
         <div className='card' id="accomodationRequestCard" style={{'textAlign':'left', margin:'0', padding: '2px'}}>
 
-          <div className='row'>
-            <div className='ui fluid icon input'>
-              <i className='marker icon'></i>
-              <input type='text' placeholder='location for accomodation...'
+          <div className='ui form' style={{padding: '15px'}}>
+            <div className='field'>
+              <h4> location </h4>
+              <input type='text' placeholder='location for accomodation...' style={{padding: '15px'}}
                       value={this.state.location} onChange={this.handleLocationInput}/>
             </div>
           </div>
-
-          <br />
           
           <div className='ui grid' id="accomodationRequestCardFirstChild">
             
