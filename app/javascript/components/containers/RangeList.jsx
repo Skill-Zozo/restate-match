@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import Slider from 'rc-slider';
-import Tooltip from 'rc-tooltip';
-import 'rc-slider/assets/index.css';
-import 'rc-tooltip/assets/bootstrap.css';
+import _ from 'lodash'
+import Slider from 'rc-slider'
+import Tooltip from 'rc-tooltip'
+import 'rc-slider/assets/index.css'
+import 'rc-tooltip/assets/bootstrap.css'
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
@@ -28,7 +29,7 @@ class RangeList extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			rangeItems: this.props.rangeItems
+			...this.props
 		}
 	}
 
@@ -42,20 +43,56 @@ class RangeList extends Component {
     return finalMarks;
 	}
 
+  setRangeMarks = (values) => {
+    let activeValues = this.state[this]
+    activeValues[this].min = values[0]
+    activeValues[this].max = values[1]
+    this.setState({rangeItemName: activeValues})
+    rangeItem['setItemValue'](values)
+  }
+
+  setMin = (event) => {
+    let values = [event.target.value, this.state.rangeItems[event.target.name].max]
+    this.state.rangeItems[event.target.name]['setItemValue'](values)
+  }
+
+  setMax = (event) => {
+    let values = [this.state.rangeItems[event.target.name].min, event.target.value]
+    this.state.rangeItems[event.target.name]['setItemValue'](values)
+  }
+
 	render () {
-		let items = this.state.rangeItems
-		return items.map((rangeItem, i) => (
-				<div className='item row spaced' key={rangeItem.name}>
-          <div className="ui horizontal left-borded-label"> {rangeItem.name}</div>
-          <div className="middle aligned content" style={{margin: '0px 10px 0px 10px'}}>
-            <Range className='column' min={rangeItem.min} max={rangeItem.max} 
-            				handle={handles} marks={this.marks(rangeItem.min, rangeItem.max)} 
-            				onChange={rangeItem['setItemValue']}  defaultValue={[rangeItem.min, rangeItem.max]}/>
-          </div>
-      	</div>
-      )
-		)
-	}
+		let itemsKeys =  _.keys(this.state.rangeItems)
+		return (
+      <div className='ui form' style={{padding: '15px'}}>
+        { 
+          itemsKeys.map((rangeItemName, i) => (
+            <div className='field' key={rangeItemName}>
+              <h4 className="ui header">{rangeItemName}</h4>
+              <div className="fields">
+                <div className='eleven wide field'>
+                  <Range className='column' min={this.state.rangeItems[rangeItemName].min} max={this.state.rangeItems[rangeItemName].max} 
+                          handle={handles} marks={this.marks(this.state.rangeItems[rangeItemName].min, this.state.rangeItems[rangeItemName].max)} style={{fontSize: '150%'}}
+                          onChange={this.state.rangeItems[rangeItemName]['setItemValue']} 
+                          value={
+                            [parseInt(this.props.rangeItems[rangeItemName].min || this.state.rangeItems[rangeItemName].min), parseInt(this.props.rangeItems[rangeItemName].max || this.state.rangeItems[rangeItemName].max)]} defaultValue={[this.state.rangeItems[rangeItemName].min, this.state.rangeItems[rangeItemName].max]}/>
+                </div>
+                <div className='two wide field'>
+                  <input type="number" placeholder={`${this.state.rangeItems[rangeItemName].min}`} name={rangeItemName} value={this.props.rangeItems[rangeItemName].min} onChange={this.setMin}/>
+                </div>
+                <div className='one wide field' style={{textAlign: 'center'}}>
+                  -
+                </div>
+                <div className='two wide field'>
+                  <input type="number" placeholder={`${this.state.rangeItems[rangeItemName].max}`} name={rangeItemName} value={this.props.rangeItems[rangeItemName].max} onChange={this.setMax}/>
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    )
+  }
 }
 
 module.exports = RangeList

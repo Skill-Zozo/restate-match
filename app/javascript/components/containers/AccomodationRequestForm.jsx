@@ -124,27 +124,32 @@ class AccomodationRequestForm extends React.Component {
         <Modal  modalMessage={modalMessage}
                 status={requestToCreateAccomReq} onSuccess={this.showMatches}/>
 
-        <div className='card' id="accomodationRequestCard" style={{'textAlign':'left'}}>
+        <div className='card' id="accomodationRequestCard" style={{'textAlign':'left', margin:'0', padding: '2px'}}>
 
-          <div className='row'>
-            <div className='ui fluid icon input'>
-              <i className='marker icon'></i>
-              <input type='text' placeholder='location for accomodation...'
+          <div className='ui form' style={{padding: '15px'}}>
+            <div className='field'>
+              <h4> location </h4>
+              <input type='text' placeholder='location for accomodation...' style={{padding: '15px'}}
                       value={this.state.location} onChange={this.handleLocationInput}/>
             </div>
           </div>
-
-          <br />
           
           <div className='ui grid' id="accomodationRequestCardFirstChild">
             
-            <div className='ui fourteen wide column unstackable list items' style={{marginBottom: '0px', paddingBottom: '0px'}} id="bedroomPriceContainer">
+            <div className='ui sixteen wide column unstackable list items' style={{marginBottom: '0px', paddingBottom: '0px'}} id="bedroomPriceContainer">
               <RangeList rangeItems={
-                [
-                  {name: "price", setItemValue: this.setPrice, ...this.state.filter.price},
-                  {name: "bedroom", setItemValue: this.setBedrooms, ...this.state.filter.bedrooms}
-                ]
-              } />
+                  {
+                    price: {
+                      setItemValue: this.setPrice, 
+                      ...this.state.filter.price
+                    },
+                    bedroom: {
+                      setItemValue: this.setBedrooms, 
+                      ...this.state.filter.bedrooms
+                    }
+                  }
+                }
+              />
             </div>
           
             <div className={this.props.listViewSettings + ' ui divided list items'} style={{marginTop: '0px'}}>
