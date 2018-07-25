@@ -4,6 +4,8 @@ import Slider from 'rc-slider'
 import Tooltip from 'rc-tooltip'
 import 'rc-slider/assets/index.css'
 import 'rc-tooltip/assets/bootstrap.css'
+import { connect} from 'react-redux'
+
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
@@ -69,7 +71,7 @@ class RangeList extends Component {
           itemsKeys.map((rangeItemName, i) => (
             <div className='field' key={rangeItemName}>
               <h4 className="ui header">{rangeItemName}</h4>
-              <div className="fields">
+              <div className={this.props.fieldClasses}>
                 <div className='eleven wide field'>
                   <Range className='column' min={this.state.rangeItems[rangeItemName].min} max={this.state.rangeItems[rangeItemName].max} 
                           handle={handles} marks={this.marks(this.state.rangeItems[rangeItemName].min, this.state.rangeItems[rangeItemName].max)} style={{fontSize: '150%'}}
@@ -95,4 +97,11 @@ class RangeList extends Component {
   }
 }
 
-module.exports = RangeList
+function mapStateToProps(state, ownProps) {
+  const { fieldClasses } = state.SetView
+  return {
+    fieldClasses: fieldClasses
+  }
+}
+
+module.exports = connect(mapStateToProps)(RangeList)

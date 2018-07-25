@@ -60,7 +60,7 @@ class ListingContainer extends Component {
 	render() {
 		return (
 			<div className="ui raised card three wide column" >
-				<div className='ui red header' style={{margin:'0!important'}}> R{this.state.match.price}</div>
+				<div className='ui red header' style={{margin:'0!important', paddingTop: '0.5em'}}> R{this.state.match.price}</div>
         <div className="ui image below" onMouseOver={this.showArrows} onMouseLeave={this.hideArrows}>
         	<button className="circular ui icon primary basic button onTop toTheLeft" onClick={this.shiftIndexToTheLeft} style={{visibility: this.state.arrows.left, cursor: "pointer"}}>
         	 <i className="angle large left icon"></i>
