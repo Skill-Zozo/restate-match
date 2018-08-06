@@ -8,11 +8,16 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'home#index'
 
-  get 'accomodation', to: 'accomodation#index'
+  # TODO: sort out resources for accomodation -> request
+  get 'accomodation/request/new', to: 'accomodations/accomodation_request#new'
 
-  post 'accomodation/search', to: 'accomodation#search'
+  get 'accomodation/new', to: 'accomodations/accomodation#new'
 
-  put 'accomodation/request', to: 'accomodation#new_request'
+  put 'accomodation/create', to: 'accomodations/accomodation#create'
 
-  post 'accomodation/matches', to: 'accomodation#matches'
+  post 'accomodation/search', to: 'accomodations/accomodation#search'
+
+  put 'accomodation/request/create', to: 'accomodations/accomodation_request#create'
+
+  post 'accomodation/request/matches', to: 'accomodations/accomodation_request#matches'
 end

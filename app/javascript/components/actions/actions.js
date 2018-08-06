@@ -73,7 +73,7 @@ export function resetToAccomodationRequestForm(state) {
 function createAccomodationRequest(state, dispatch) {
 	let filter = state.filter
 	$.ajax({
-		url: '/accomodation/request',
+		url: '/accomodation/request/create',
 	  type: 'PUT',
 	  data: filter,
 	  datatype: "json",
